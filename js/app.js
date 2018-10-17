@@ -1,6 +1,7 @@
 'use strict';
 
 const objArray = [];
+const keywordArray = [];
 
 function Horned(animalObject) {
   this.url = animalObject.image_url;
@@ -21,7 +22,7 @@ Horned.prototype.render = function() {
   $imgContainer.html($imgTemplate);
 
   $imgContainer.find('img').attr('src', this.url);
-  $imgContainer.find('img').attr('data-keyword', this.keyword);
+  $imgContainer.attr('data-keyword', this.keyword);
   $imgContainer.find('img').attr('data-horns', this.horns);
   $imgContainer.find('img').attr('alt', this.keyword);
   $imgContainer.find('h2').text(this.title);
@@ -35,6 +36,8 @@ function renderImages() {
   objArray.forEach(obj => {
     obj.render();
   });
+checkKeywords();
+addOptionEl();
 }
 
 //read data and create objects
@@ -46,4 +49,28 @@ function renderImages() {
    }).then(renderImages);
  }
 
-readData();
+function checkKeywords() {
+
+  objArray.forEach(obj => {
+    if (!keywordArray.includes(obj.keyword)) {
+      keywordArray.push(obj.keyword);
+    }
+  });
+}
+
+function addOptionEl() {
+  keywordArray.forEach(keyword => {
+    $('select').append('<option id = "temp"></option>');
+    $('#temp').text(keyword).attr('value', keyword).removeAttr('id');
+  });
+}
+
+readData(); 
+addOptionEl();
+
+$('select').on('change', function(){
+  let $select = $(this).val();
+  $('div').hide();
+  $(`div[data-keyword="${$select}"]`).show();
+})
+
