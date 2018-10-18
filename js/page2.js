@@ -53,7 +53,7 @@ addOptionEl();
 
 //read data and create objects
  function readData() {
-   $.get('../data/page-2.json', data => {
+   $.get('data/page-2.json', data => {
      data.forEach(obj => {
        new Horned(obj);
        sortTitle(objArray);
