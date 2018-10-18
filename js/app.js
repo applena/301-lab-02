@@ -2,6 +2,8 @@
 
 const objArray = [];
 const keywordArray = [];
+const hornsArray = [];
+
 
 function Horned(animalObject) {
   this.url = animalObject.image_url;
@@ -12,32 +14,39 @@ function Horned(animalObject) {
   objArray.push(this);
 }
 
-
 Horned.prototype.render = function() {
-  $('main').append('<div id="copy"></div>');
-  let $imgContainer = $('div[id = "copy"]');
-  let $imgTemplate = $('#photo-template').html();
+  let hornSource = $('#container').html();
+  let hornTemplate = Handlebars.compile(hornSource);
+  let hornHtml = hornTemplate(this);
 
-
-  $imgContainer.html($imgTemplate);
-
-  $imgContainer.find('img').attr('src', this.url);
-  $imgContainer.attr('data-keyword', this.keyword);
-  $imgContainer.find('img').attr('data-horns', this.horns);
-  $imgContainer.find('img').attr('alt', this.keyword);
-  $imgContainer.find('h2').text(this.title);
-  $imgContainer.find('p').text(this.description);
-
-  $imgContainer.removeAttr('id');
+  $('main').append(hornHtml);
 }
 
-//render all images
+
+function sortTitle(arr){
+  arr.sort((a,b) =>{
+    if(a.title.toUpperCase() < b.title.toUpperCase()){
+      return -1;
+    } if (a.title.toUpperCase() > b.title.toUpperCase()){
+      return 1
+  }
+  return 0;
+});
+}
+
+
+
+
 function renderImages() {
   objArray.forEach(obj => {
     obj.render();
+ 
   });
+
 checkKeywords();
+checkHorns();
 addOptionEl();
+
 }
 
 //read data and create objects
@@ -45,6 +54,7 @@ addOptionEl();
    $.get('../data/page-1.json', data => {
      data.forEach(obj => {
        new Horned(obj);
+       sortTitle(objArray);
      });
    }).then(renderImages);
  }
@@ -65,12 +75,24 @@ function addOptionEl() {
   });
 }
 
+function checkHorns() {
+  objArray.forEach(obj => {
+    if (!hornsArray.includes(obj.horns)) {
+      hornsArray.push(obj.horns);
+    }
+  });
+}
+
 readData(); 
 addOptionEl();
 
+
 $('select').on('change', function(){
   let $select = $(this).val();
+  // $('div').show();
+  // $(`div [data-keyword != "${$select}"]`).hide();
   $('div').hide();
-  $(`div[data-keyword="${$select}"]`).show();
-})
+  console.log( $(`div[data-keyword = "${$select}"]`));
+  $(`div[data-keyword = "${$select}"]`).show();
+});
 

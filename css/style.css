@@ -1,6 +1,15 @@
+
+
 body{
-  background-color: black;
+  background-color:#111;
   width: 100%;
+ 
+}
+
+main{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 header{
@@ -8,6 +17,13 @@ header{
   font-family: 'Montserrat Alternates', sans-serif;
   font-size: 2.75em;
   text-align:center;
+  text-shadow: 2px 2px red;
+}
+
+a{
+  text-shadow: none;
+  font-size: .8em;
+  text-decoration: none;
 }
 
 select{
@@ -20,10 +36,13 @@ select{
 }
 
 div{
+  display: flex;
+  flex-wrap: wrap;
   height: 25em;
+  justify-content: space-evenly;
   width:30em;
-  float: left;
   margin-top: 3em;
+  
 
 }
 h2{
@@ -34,8 +53,8 @@ h2{
 }
 
 img{
-  display: block;
-  margin: auto;
+  /* display: block; */
+  /* margin: auto; */
   height: 90%;
   width: 90%;
   z-index: 5;
@@ -59,7 +78,7 @@ p{
   text-align: center;
   visibility: hidden;
   width: 90%;  
-}
+} 
 
 footer{
 color: cornsilk;
