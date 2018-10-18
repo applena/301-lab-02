@@ -3,6 +3,7 @@
 body{
   background-color:#111;
   width: 100%;
+ 
 }
 
 main{
@@ -16,6 +17,13 @@ header{
   font-family: 'Montserrat Alternates', sans-serif;
   font-size: 2.75em;
   text-align:center;
+  text-shadow: 2px 2px red;
+}
+
+a{
+  text-shadow: none;
+  font-size: .8em;
+  text-decoration: none;
 }
 
 select{
